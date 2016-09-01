@@ -1,15 +1,9 @@
 package com.vrcc.domain;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.vrcc.domain.validation.Bath;
-import com.vrcc.domain.validation.Bed;
-import com.vrcc.domain.validation.SquareMeter;
-import com.vrcc.domain.validation.X;
-import com.vrcc.domain.validation.Y;
+import static java.util.stream.Collectors.toList;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+import java.util.Collection;
+
 public class Property {
 
 	private final long id;
@@ -21,24 +15,10 @@ public class Property {
 	private final int beds;
 	private final int baths;
 	private final long squareMeters;
-	private final String[] provinces;
+	private final Collection<String> provinces;
 
-	public Property() {
-		this(0L, 0, 0, null, 0L, null, 0, 0, 0L, null);
-	}
-
-	@JsonCreator
-	public Property(
-			@JsonProperty("id") long id,
-			@JsonProperty("x") int x,
-			@JsonProperty("y") int y,
-			@JsonProperty("title") String title,
-			@JsonProperty("price") long price,
-			@JsonProperty("description") String description,
-			@JsonProperty("beds") int beds,
-			@JsonProperty("baths") int baths,
-			@JsonProperty("squareMeters") long squareMeters,
-			@JsonProperty("provinces") String[] provinces) {
+	private Property(long id, int x, int y, String title, long price, String description, int beds, int baths,
+			long squareMeters, Collection<String> provinces) {
 		this.id = id;
 		this.x = x;
 		this.y = y;
@@ -51,21 +31,33 @@ public class Property {
 		this.provinces = provinces;
 	}
 
-	public Property(long id, Property added) {
-		this(id, added.x, added.y, added.title, added.price, added.description,
+	public static Property added(long id, Property added) {
+		return new Property(id, added.x, added.y, added.title, added.price, added.description,
 				added.beds, added.baths, added.squareMeters, added.provinces);
+	}
+
+	public static Property located(Property added, Collection<Province> provinces) {
+		return new Property(added.id, added.x, added.y, added.title, added.price, added.description,
+				added.beds, added.baths, added.squareMeters, provinces(provinces));
+	}
+
+	private static Collection<String> provinces(Collection<Province> provinces) {
+		return provinces.stream().map(province -> province.getName()).collect(toList());
+	}
+
+	public static Property brandNew(int x, int y, String title, long price, String description, int beds, int baths,
+			long squareMeters) {
+		return new Property(0L, x, y, title, price, description, beds, baths, squareMeters, null);
 	}
 
 	public long getId() {
 		return id;
 	}
 
-	@X
 	public int getX() {
 		return x;
 	}
 
-	@Y
 	public int getY() {
 		return y;
 	}
@@ -82,22 +74,19 @@ public class Property {
 		return description;
 	}
 
-	@Bed
 	public int getBeds() {
 		return beds;
 	}
 
-	@Bath
 	public int getBaths() {
 		return baths;
 	}
 
-	@SquareMeter
 	public long getSquareMeters() {
 		return squareMeters;
 	}
 
-	public String[] getProvinces() {
+	public Collection<String> getProvinces() {
 		return provinces;
 	}
 

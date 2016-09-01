@@ -1,39 +1,48 @@
 package com.vrcc.core.facade.impl;
 
+import java.util.Collection;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import com.vrcc.core.business.PropertyAssembler;
+import com.vrcc.core.business.ProvinceLocator;
 import com.vrcc.core.dao.PropertyDAO;
 import com.vrcc.core.facade.PropertyFacade;
-import com.vrcc.domain.Properties;
 import com.vrcc.domain.Property;
 import com.vrcc.domain.PropertyFilter;
+import com.vrcc.domain.Province;
 
 @Singleton
 public class SimplePropertyFacade implements PropertyFacade {
 
-	private final PropertyDAO dao;
+	private final PropertyDAO propertyDAO;
+	private final ProvinceLocator provinceLocator;
+	private final PropertyAssembler propertyAssembler;
 
 	@Inject
-	public SimplePropertyFacade(PropertyDAO dao) {
-		this.dao = dao;
+	public SimplePropertyFacade(PropertyDAO propertyDAO, ProvinceLocator provinceLocator,
+			PropertyAssembler propertyAssembler) {
+		this.propertyDAO = propertyDAO;
+		this.provinceLocator = provinceLocator;
+		this.propertyAssembler = propertyAssembler;
 	}
 
 	@Override
-	public Property add(Property request) {
-		return dao.add(request);
+	public Property add(Property property) {
+		final Collection<Province> provinces = provinceLocator.locate(property);
+		propertyAssembler.assembly(property, provinces);
+		return propertyDAO.add(property);
 	}
 
 	@Override
 	public Property get(long id) {
-		return dao.get(id);
+		return propertyDAO.get(id);
 	}
 
 	@Override
-	public Properties find(PropertyFilter filter) {
-		final Property[] properties = dao.find(filter.getAx(), filter.getAy(),
-				filter.getBx(), filter.getBy());
-		return new Properties(properties.length, properties);
+	public Collection<Property> find(PropertyFilter filter) {
+		return propertyDAO.find(filter);
 	}
 
 }

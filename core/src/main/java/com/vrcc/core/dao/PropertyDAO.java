@@ -1,6 +1,9 @@
 package com.vrcc.core.dao;
 
+import java.util.Collection;
+
 import com.vrcc.domain.Property;
+import com.vrcc.domain.PropertyFilter;
 
 public interface PropertyDAO {
 
@@ -8,6 +11,6 @@ public interface PropertyDAO {
 
 	Property get(long id);
 
-	Property[] find(int ax, int ay, int bx, int by);
-	
+	Collection<Property> find(PropertyFilter filter);
+
 }

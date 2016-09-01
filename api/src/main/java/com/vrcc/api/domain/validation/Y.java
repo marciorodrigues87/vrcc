@@ -1,7 +1,8 @@
-package com.vrcc.domain.validation;
+package com.vrcc.api.domain.validation;
 
-import static com.vrcc.utils.Characteristics.MAX_BEDS;
-import static com.vrcc.utils.Characteristics.MIN_BEDS;
+import static com.vrcc.utils.Characteristics.MAX_Y;
+import static com.vrcc.utils.Characteristics.MIN_Y;
+import static com.vrcc.utils.Regexes.NUMERIC;
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
@@ -15,16 +16,18 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 
 @Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
 @Documented
-@Min(MIN_BEDS)
-@Max(MAX_BEDS)
-public @interface X {
+@Min(MIN_Y)
+@Max(MAX_Y)
+@Pattern(regexp = NUMERIC)
+public @interface Y {
 
-	String message() default "not a valid x";
+	String message() default "not a valid y";
 
 	Class<?>[] groups() default {};
 

@@ -2,7 +2,7 @@ package com.vrcc.core.dao.impl;
 
 import static java.util.stream.Collectors.toList;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -11,6 +11,7 @@ import javax.inject.Singleton;
 
 import com.vrcc.core.dao.PropertyDAO;
 import com.vrcc.domain.Property;
+import com.vrcc.domain.PropertyFilter;
 
 @Singleton
 public class PropertyDAOMemoryImpl implements PropertyDAO {
@@ -21,7 +22,7 @@ public class PropertyDAOMemoryImpl implements PropertyDAO {
 	@Override
 	public Property add(Property property) {
 		final long id = sequence.incrementAndGet();
-		final Property added = new Property(id, property);
+		final Property added = Property.added(id, property);
 		database.put(id, added);
 		return added;
 	}
@@ -32,14 +33,16 @@ public class PropertyDAOMemoryImpl implements PropertyDAO {
 	}
 
 	@Override
-	public Property[] find(int ax, int ay, int bx, int by) {
-		final List<Property> properties = database.values()
+	public Collection<Property> find(PropertyFilter filter) {
+		return database.values()
 				.stream()
-				.filter(p -> (p.getX() >= ax && p.getX() <= bx
-						&&
-						p.getY() >= ay && p.getY() <= by))
+				.filter(property -> accept(property, filter))
 				.collect(toList());
-		return properties.toArray(new Property[properties.size()]);
+	}
+
+	private boolean accept(Property property, PropertyFilter filter) {
+		return property.getX() >= filter.getAx() && property.getX() <= filter.getBx()
+				&& property.getY() >= filter.getAy() && property.getY() <= filter.getBy();
 	}
 
 }

@@ -1,14 +1,15 @@
 package com.vrcc.core.facade;
 
-import com.vrcc.domain.Properties;
+import java.util.Collection;
+
 import com.vrcc.domain.Property;
 import com.vrcc.domain.PropertyFilter;
 
 public interface PropertyFacade {
 
-	Property add(Property request);
+	Property add(Property property);
 
 	Property get(long id);
 
-	Properties find(PropertyFilter filter);
+	Collection<Property> find(PropertyFilter filter);
 }
