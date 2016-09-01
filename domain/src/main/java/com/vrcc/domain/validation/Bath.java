@@ -11,14 +11,23 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import javax.validation.Constraint;
+import javax.validation.Payload;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
-@Min(MIN_X)
-@Max(MAX_X)
 @Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
+@Constraint(validatedBy = {})
 @Documented
+@Min(MIN_X)
+@Max(MAX_X)
 public @interface Bath {
+
+	String message() default "not a valid bath";
+
+	Class<?>[] groups() default {};
+
+	Class<? extends Payload>[] payload() default {};
 
 }

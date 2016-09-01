@@ -5,6 +5,10 @@ public class Properties {
 	private final long foundProperties;
 	private final Property[] properties;
 
+	public Properties() {
+		this(0L, null);
+	}
+
 	public Properties(long foundProperties, Property[] properties) {
 		this.foundProperties = foundProperties;
 		this.properties = properties;

@@ -7,9 +7,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+import javax.inject.Singleton;
+
 import com.vrcc.core.dao.PropertyDAO;
 import com.vrcc.domain.Property;
 
+@Singleton
 public class PropertyDAOMemoryImpl implements PropertyDAO {
 
 	private final AtomicLong sequence = new AtomicLong(0);
@@ -32,10 +35,9 @@ public class PropertyDAOMemoryImpl implements PropertyDAO {
 	public Property[] find(int ax, int ay, int bx, int by) {
 		final List<Property> properties = database.values()
 				.stream()
-				.filter(p -> 
-						(p.getX() <= ax && p.getX() >= bx
-						&& 
-						p.getY() <= ay && p.getY() >= by))
+				.filter(p -> (p.getX() >= ax && p.getX() <= bx
+						&&
+						p.getY() >= ay && p.getY() <= by))
 				.collect(toList());
 		return properties.toArray(new Property[properties.size()]);
 	}

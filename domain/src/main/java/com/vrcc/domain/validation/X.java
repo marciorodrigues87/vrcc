@@ -11,14 +11,23 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import javax.validation.Constraint;
+import javax.validation.Payload;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
-@Min(MIN_BEDS)
-@Max(MAX_BEDS)
 @Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
+@Constraint(validatedBy = {})
 @Documented
+@Min(MIN_BEDS)
+@Max(MAX_BEDS)
 public @interface X {
+
+	String message() default "not a valid x";
+
+	Class<?>[] groups() default {};
+
+	Class<? extends Payload>[] payload() default {};
 
 }

@@ -1,4 +1,4 @@
-package com.vrcc.api.servlet.guice;
+package com.vrcc.api.guice;
 
 import com.google.inject.AbstractModule;
 import com.vrcc.core.dao.PropertyDAO;

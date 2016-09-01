@@ -1,6 +1,7 @@
 package com.vrcc.core.facade.impl;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import com.vrcc.core.dao.PropertyDAO;
 import com.vrcc.core.facade.PropertyFacade;
@@ -8,6 +9,7 @@ import com.vrcc.domain.Properties;
 import com.vrcc.domain.Property;
 import com.vrcc.domain.PropertyFilter;
 
+@Singleton
 public class SimplePropertyFacade implements PropertyFacade {
 
 	private final PropertyDAO dao;

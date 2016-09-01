@@ -1,7 +1,5 @@
 package com.vrcc.domain;
 
-import javax.validation.constraints.Null;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -25,19 +23,22 @@ public class Property {
 	private final long squareMeters;
 	private final String[] provinces;
 
+	public Property() {
+		this(0L, 0, 0, null, 0L, null, 0, 0, 0L, null);
+	}
+
 	@JsonCreator
 	public Property(
-			@JsonProperty("id") long id, 
-			@JsonProperty("x") int x, 
-			@JsonProperty("y") int y, 
-			@JsonProperty("title") String title, 
+			@JsonProperty("id") long id,
+			@JsonProperty("x") int x,
+			@JsonProperty("y") int y,
+			@JsonProperty("title") String title,
 			@JsonProperty("price") long price,
-			@JsonProperty("description") String description, 
-			@JsonProperty("beds") int beds, 
-			@JsonProperty("baths") int baths, 
+			@JsonProperty("description") String description,
+			@JsonProperty("beds") int beds,
+			@JsonProperty("baths") int baths,
 			@JsonProperty("squareMeters") long squareMeters,
-			@JsonProperty("provinces") String[] provinces
-		) {
+			@JsonProperty("provinces") String[] provinces) {
 		this.id = id;
 		this.x = x;
 		this.y = y;
@@ -55,7 +56,6 @@ public class Property {
 				added.beds, added.baths, added.squareMeters, added.provinces);
 	}
 
-	@Null
 	public long getId() {
 		return id;
 	}

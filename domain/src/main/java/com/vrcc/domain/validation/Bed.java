@@ -11,14 +11,23 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import javax.validation.Constraint;
+import javax.validation.Payload;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
-@Min(MIN_BATHS)
-@Max(MAX_BATHS)
 @Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
+@Constraint(validatedBy = {})
 @Documented
+@Min(MIN_BATHS)
+@Max(MAX_BATHS)
 public @interface Bed {
+
+	String message() default "not a valid bed";
+
+	Class<?>[] groups() default {};
+
+	Class<? extends Payload>[] payload() default {};
 
 }
