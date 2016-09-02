@@ -16,5 +16,13 @@
 			<groupId>com.google.inject</groupId>
 			<artifactId>guice</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.vrcc</groupId>
+			<artifactId>utils</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vrcc</groupId>
+			<artifactId>infra</artifactId>
+		</dependency>
 	</dependencies>
 </project>

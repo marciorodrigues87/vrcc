@@ -1,4 +1,4 @@
-package com.vrcc.core.dao;
+package com.vrcc.infra.dao;
 
 import java.util.Collection;
 

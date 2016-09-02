@@ -1,4 +1,4 @@
-package com.vrcc.core.dao.impl;
+package com.vrcc.infra.dao.impl;
 
 import static java.util.stream.Collectors.toList;
 
@@ -9,9 +9,9 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.inject.Singleton;
 
-import com.vrcc.core.dao.PropertyDAO;
 import com.vrcc.domain.Property;
 import com.vrcc.domain.PropertyFilter;
+import com.vrcc.infra.dao.PropertyDAO;
 
 @Singleton
 public class PropertyDAOMemoryImpl implements PropertyDAO {
@@ -41,8 +41,10 @@ public class PropertyDAOMemoryImpl implements PropertyDAO {
 	}
 
 	private boolean accept(Property property, PropertyFilter filter) {
-		return property.getX() >= filter.getAx() && property.getX() <= filter.getBx()
-				&& property.getY() >= filter.getAy() && property.getY() <= filter.getBy();
+		return property.getX() >= filter.getAx()
+				&& property.getX() <= filter.getBx()
+				&& property.getY() >= filter.getAy()
+				&& property.getY() <= filter.getBy();
 	}
 
 }

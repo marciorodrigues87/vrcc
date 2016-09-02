@@ -5,7 +5,8 @@
         <param-name>resteasy.guice.modules</param-name>
         <param-value>
         	com.vrcc.api.guice.ApiModule,
-        	com.vrcc.api.guice.CoreModule
+        	com.vrcc.api.guice.CoreModule,
+        	com.vrcc.api.guice.InfraModule
         </param-value>
     </context-param>
 

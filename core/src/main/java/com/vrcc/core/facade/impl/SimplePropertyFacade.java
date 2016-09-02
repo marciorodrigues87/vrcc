@@ -7,11 +7,11 @@ import javax.inject.Singleton;
 
 import com.vrcc.core.business.PropertyAssembler;
 import com.vrcc.core.business.ProvinceLocator;
-import com.vrcc.core.dao.PropertyDAO;
 import com.vrcc.core.facade.PropertyFacade;
 import com.vrcc.domain.Property;
 import com.vrcc.domain.PropertyFilter;
 import com.vrcc.domain.Province;
+import com.vrcc.infra.dao.PropertyDAO;
 
 @Singleton
 public class SimplePropertyFacade implements PropertyFacade {
@@ -31,8 +31,8 @@ public class SimplePropertyFacade implements PropertyFacade {
 	@Override
 	public Property add(Property property) {
 		final Collection<Province> provinces = provinceLocator.locate(property);
-		propertyAssembler.assembly(property, provinces);
-		return propertyDAO.add(property);
+		final Property completeProperty = propertyAssembler.assembly(property, provinces);
+		return propertyDAO.add(completeProperty);
 	}
 
 	@Override

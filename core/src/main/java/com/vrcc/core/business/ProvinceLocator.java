@@ -5,9 +5,10 @@ import java.util.Collection;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.vrcc.core.dao.ProvinceDAO;
+import com.vrcc.domain.Boundary;
 import com.vrcc.domain.Property;
 import com.vrcc.domain.Province;
+import com.vrcc.infra.dao.ProvinceDAO;
 
 @Singleton
 public class ProvinceLocator {
@@ -20,7 +21,7 @@ public class ProvinceLocator {
 	}
 
 	public Collection<Province> locate(Property property) {
-		return null;
+		return provinceDAO.find(Boundary.at(property.getX(), property.getY()));
 	}
 
 }
