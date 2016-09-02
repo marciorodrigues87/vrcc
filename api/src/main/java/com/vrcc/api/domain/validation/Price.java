@@ -14,11 +14,14 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
 @Documented
 @Pattern(regexp = NUMERIC)
+@NotBlank
 public @interface Price {
 
 	String message() default "not a valid price";

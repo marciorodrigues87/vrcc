@@ -34,4 +34,35 @@ public class PropertyFilter {
 		return by;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ax;
+		result = prime * result + ay;
+		result = prime * result + bx;
+		result = prime * result + by;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PropertyFilter other = (PropertyFilter) obj;
+		if (ax != other.ax)
+			return false;
+		if (ay != other.ay)
+			return false;
+		if (bx != other.bx)
+			return false;
+		if (by != other.by)
+			return false;
+		return true;
+	}
+
 }

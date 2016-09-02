@@ -45,8 +45,8 @@ public class ProvinceDAOFileImpl implements ProvinceDAO {
 	public boolean contains(Boundary boundary, Boundaries boundaries) {
 		return boundary.getX() >= boundaries.getUpperLeft().getX()
 				&& boundary.getX() <= boundaries.getBottomRight().getX()
-				&& boundary.getY() >= boundaries.getUpperLeft().getY()
-				&& boundary.getY() <= boundaries.getBottomRight().getY();
+				&& boundary.getY() <= boundaries.getUpperLeft().getY()
+				&& boundary.getY() >= boundaries.getBottomRight().getY();
 	}
 
 }
