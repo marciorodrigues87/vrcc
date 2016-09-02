@@ -1,5 +1,7 @@
 package com.vrcc.api.domain;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vrcc.api.domain.validation.Bath;
 import com.vrcc.api.domain.validation.Bed;
@@ -33,6 +35,7 @@ public class PropertyRequest {
 		return y;
 	}
 
+	@NotBlank
 	public String getTitle() {
 		return title;
 	}
@@ -42,6 +45,7 @@ public class PropertyRequest {
 		return price;
 	}
 
+	@NotBlank
 	public String getDescription() {
 		return description;
 	}

@@ -18,6 +18,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
@@ -25,6 +27,7 @@ import javax.validation.constraints.Pattern;
 @Min(MIN_BEDS)
 @Max(MAX_BEDS)
 @Pattern(regexp = NUMERIC)
+@NotBlank
 public @interface X {
 
 	String message() default "not a valid x";
