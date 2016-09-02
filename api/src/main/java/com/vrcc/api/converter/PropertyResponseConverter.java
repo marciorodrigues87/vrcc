@@ -11,6 +11,9 @@ import com.vrcc.domain.Property;
 public class PropertyResponseConverter {
 
 	public PropertyResponse convert(Property property) {
+		if (property == null) {
+			return null;
+		}
 		return new PropertyResponse(property.getId(), property.getX(), property.getY(), property.getTitle(),
 				property.getPrice(), property.getDescription(), property.getBeds(), property.getBaths(),
 				property.getSquareMeters(), property.getProvinces());

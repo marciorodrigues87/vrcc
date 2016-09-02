@@ -1,0 +1,18 @@
+<configuration scan="true" scanPeriod="10 seconds">
+
+	<property name="ENCRYPT_FIELDS" value="(cvv|pan|number|securityCode|expiration|hash)" />
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg [%X{uri}:%X{ticket}]%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="org.hibernate" level="ERROR" />
+	<logger name="org.jboss" level="ERROR" />
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>
