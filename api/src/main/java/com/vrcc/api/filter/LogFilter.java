@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jboss.logging.MDC;
+import org.perf4j.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,11 +22,7 @@ public class LogFilter implements Filter {
 
 	private static final Logger log = LoggerFactory.getLogger(LogFilter.class);
 
-	private static final String MDC_TICKET = "ticket";
-
 	private static final String MDC_URI = "uri";
-
-	private static final Tickets tickets = new Tickets();
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -36,19 +33,21 @@ public class LogFilter implements Filter {
 			throws IOException, ServletException {
 		final WrappedHttpServletRequest httpRequest = wrap(request);
 		final WrappedHttpServletResponse httpResponse = wrap(response);
+		final StopWatch timer = new StopWatch();
 		try {
 			mdc(httpRequest);
 			logRequest(httpRequest);
 			chain.doFilter(httpRequest, httpResponse);
-			logResponse(httpResponse);
+			timer.stop();
+			logResponse(httpResponse, timer.getElapsedTime());
 		} finally {
 			cleanMdc();
 		}
 
 	}
 
-	private void logResponse(WrappedHttpServletResponse httpResponse) {
-		log.info("RESPONSE status={}, body={}", httpResponse.getStatus(), httpResponse.getBody());
+	private void logResponse(WrappedHttpServletResponse httpResponse, long time) {
+		log.info("RESPONSE status={}, body={}, time={}", httpResponse.getStatus(), httpResponse.getBody(), time);
 	}
 
 	private void logRequest(WrappedHttpServletRequest httpRequest) {
@@ -66,13 +65,10 @@ public class LogFilter implements Filter {
 
 	private void cleanMdc() {
 		MDC.remove(MDC_URI);
-		MDC.remove(MDC_TICKET);
-		tickets.clean();
 	}
 
 	private void mdc(final HttpServletRequest httpRequest) {
 		MDC.put(MDC_URI, httpRequest.getRequestURI());
-		MDC.put(MDC_TICKET, tickets.get());
 	}
 
 	@Override
