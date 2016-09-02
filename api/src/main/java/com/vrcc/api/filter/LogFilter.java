@@ -36,21 +36,21 @@ public class LogFilter implements Filter {
 		final StopWatch timer = new StopWatch();
 		try {
 			mdc(httpRequest);
-			logRequest(httpRequest);
+			log(httpRequest);
 			chain.doFilter(httpRequest, httpResponse);
 			timer.stop();
-			logResponse(httpResponse, timer.getElapsedTime());
+			log(httpResponse, timer.getElapsedTime());
 		} finally {
 			cleanMdc();
 		}
 
 	}
 
-	private void logResponse(WrappedHttpServletResponse httpResponse, long time) {
+	private void log(WrappedHttpServletResponse httpResponse, long time) {
 		log.info("RESPONSE status={}, body={}, time={}", httpResponse.getStatus(), httpResponse.getBody(), time);
 	}
 
-	private void logRequest(WrappedHttpServletRequest httpRequest) {
+	private void log(WrappedHttpServletRequest httpRequest) {
 		log.info("REQUEST method={}, uri={}, params={}, body={}", httpRequest.getMethod(),
 				httpRequest.getRequestURI(), httpRequest.getQueryString(), httpRequest.getBody());
 	}
