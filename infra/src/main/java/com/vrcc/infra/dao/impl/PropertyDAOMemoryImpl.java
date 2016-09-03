@@ -12,6 +12,8 @@ import javax.inject.Singleton;
 import com.vrcc.domain.Property;
 import com.vrcc.domain.PropertyFilter;
 import com.vrcc.infra.dao.PropertyDAO;
+import com.vrcc.utils.math.Point;
+import com.vrcc.utils.math.Rectangle;
 
 @Singleton
 public class PropertyDAOMemoryImpl implements PropertyDAO {
@@ -41,10 +43,23 @@ public class PropertyDAOMemoryImpl implements PropertyDAO {
 	}
 
 	private boolean accept(Property property, PropertyFilter filter) {
-		return property.getX() >= filter.getAx()
-				&& property.getX() <= filter.getBx()
-				&& property.getY() >= filter.getAy()
-				&& property.getY() <= filter.getBy();
+		return rectangle(filter).contains(point(property));
+	}
+
+	private Point point(Property property) {
+		return Point.at(property.getX(), property.getY());
+	}
+
+	private Rectangle rectangle(PropertyFilter filter) {
+		return Rectangle.at(upperLeft(filter), bottomRight(filter));
+	}
+
+	private Point bottomRight(PropertyFilter filter) {
+		return Point.at(filter.getBx(), filter.getBy());
+	}
+
+	private Point upperLeft(PropertyFilter filter) {
+		return Point.at(filter.getAx(), filter.getAy());
 	}
 
 }

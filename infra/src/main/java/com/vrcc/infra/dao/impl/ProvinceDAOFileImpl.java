@@ -16,6 +16,8 @@ import com.vrcc.domain.Boundary;
 import com.vrcc.domain.Province;
 import com.vrcc.infra.dao.ProvinceDAO;
 import com.vrcc.utils.json.JsonProvider;
+import com.vrcc.utils.math.Point;
+import com.vrcc.utils.math.Rectangle;
 
 @Singleton
 public class ProvinceDAOFileImpl implements ProvinceDAO {
@@ -33,7 +35,7 @@ public class ProvinceDAOFileImpl implements ProvinceDAO {
 
 	public Collection<Province> find(Boundary boundary) {
 		return provinces.entrySet().stream()
-				.filter(e -> contains(boundary, e.getValue().getBoundaries()))
+				.filter(e -> contains(boundary, e.getValue()))
 				.map(e -> assembly(e))
 				.collect(toList());
 	}
@@ -42,11 +44,25 @@ public class ProvinceDAOFileImpl implements ProvinceDAO {
 		return Province.full(e.getKey(), e.getValue().getBoundaries());
 	}
 
-	public boolean contains(Boundary boundary, Boundaries boundaries) {
-		return boundary.getX() >= boundaries.getUpperLeft().getX()
-				&& boundary.getX() <= boundaries.getBottomRight().getX()
-				&& boundary.getY() <= boundaries.getUpperLeft().getY()
-				&& boundary.getY() >= boundaries.getBottomRight().getY();
+	public boolean contains(Boundary boundary, Province province) {
+		return rectangle(province).contains(point(boundary));
+	}
+
+	private Point point(Boundary boundary) {
+		return Point.at(boundary.getX(), boundary.getY());
+	}
+
+	private Rectangle rectangle(Province province) {
+		final Boundaries boundaries = province.getBoundaries();
+		return Rectangle.at(upperLeft(boundaries), bottomRight(boundaries));
+	}
+
+	private Point bottomRight(final Boundaries boundaries) {
+		return Point.at(boundaries.getBottomRight().getX(), boundaries.getBottomRight().getY());
+	}
+
+	private Point upperLeft(final Boundaries boundaries) {
+		return Point.at(boundaries.getUpperLeft().getX(), boundaries.getUpperLeft().getY());
 	}
 
 }

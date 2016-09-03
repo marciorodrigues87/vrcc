@@ -44,8 +44,8 @@ public class PropertyRequestConverterTest {
 		when(request.getPrice()).thenReturn(PRICE);
 		when(request.getSquareMeters()).thenReturn(SQR_METERS);
 		when(request.getTitle()).thenReturn(TITLE);
-		when(request.getY()).thenReturn(X);
-		when(request.getX()).thenReturn(Y);
+		when(request.getY()).thenReturn(Y);
+		when(request.getX()).thenReturn(X);
 
 		final Property property = converter.convert(request);
 

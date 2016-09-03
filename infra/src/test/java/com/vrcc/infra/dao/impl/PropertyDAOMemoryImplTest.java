@@ -55,9 +55,9 @@ public class PropertyDAOMemoryImplTest {
 		dao.add(property2);
 
 		when(filter.getAx()).thenReturn(1);
-		when(filter.getAy()).thenReturn(2);
+		when(filter.getAy()).thenReturn(5);
 		when(filter.getBx()).thenReturn(5);
-		when(filter.getBy()).thenReturn(5);
+		when(filter.getBy()).thenReturn(2);
 
 		final Collection<Property> properties = dao.find(filter);
 
