@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
@@ -17,6 +18,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.vrcc.api.converter.PropertiesResponseConverter;
 import com.vrcc.api.converter.PropertyFilterParamConverter;
@@ -55,7 +58,7 @@ public class PropertiesResource {
 	}
 
 	@POST
-	public PropertyResponse add(@Valid PropertyRequest request) {
+	public PropertyResponse add(@NotNull @Valid PropertyRequest request) {
 		final Property property = propertyRequestConverter.convert(request);
 		final Property addedProperty = facade.add(property);
 		return propertyResponseConverter.convert(addedProperty);
@@ -63,14 +66,14 @@ public class PropertiesResource {
 
 	@GET
 	@Path("/{id}")
-	public PropertyResponse get(@Pattern(regexp = NUMERIC) @PathParam("id") String paramId) {
+	public PropertyResponse get(@NotBlank @Pattern(regexp = NUMERIC) @PathParam("id") String paramId) {
 		final long id = propertyResponseConverter.convert(paramId);
 		final Property property = facade.get(id);
 		return propertyResponseConverter.convert(property);
 	}
 
 	@GET
-	public PropertiesResponse find(@BeanParam @Valid PropertyFilterParam filterParam) {
+	public PropertiesResponse find(@NotNull @BeanParam @Valid PropertyFilterParam filterParam) {
 		final PropertyFilter filter = propertyFilterParamConverter.convert(filterParam);
 		final Collection<Property> properties = facade.find(filter);
 		return propertiesResponseConverter.convert(properties);

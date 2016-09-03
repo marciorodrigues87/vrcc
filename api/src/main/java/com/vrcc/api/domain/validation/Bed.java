@@ -1,7 +1,7 @@
 package com.vrcc.api.domain.validation;
 
-import static com.vrcc.utils.Characteristics.MAX_BATHS;
-import static com.vrcc.utils.Characteristics.MIN_BATHS;
+import static com.vrcc.utils.Characteristics.MAX_BEDS;
+import static com.vrcc.utils.Characteristics.MIN_BEDS;
 import static com.vrcc.utils.Regexes.NUMERIC;
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;
@@ -24,8 +24,8 @@ import org.hibernate.validator.constraints.NotBlank;
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
 @Documented
-@Min(MIN_BATHS)
-@Max(MAX_BATHS)
+@Min(MIN_BEDS)
+@Max(MAX_BEDS)
 @Pattern(regexp = NUMERIC)
 @NotBlank
 public @interface Bed {
