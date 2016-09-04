@@ -1,5 +1,12 @@
 # vrcc
 
+## environment
+
+You will need the following dependencies:
+
+	java8
+	maven3
+
 ## building and running
 
 Just run the command:
