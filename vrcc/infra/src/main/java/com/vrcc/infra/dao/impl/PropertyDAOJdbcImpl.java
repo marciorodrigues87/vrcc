@@ -18,12 +18,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import com.vrcc.domain.Property;
 import com.vrcc.domain.PropertyFilter;
 import com.vrcc.infra.dao.PropertyDAO;
 import com.vrcc.infra.db.SimpleDataSource;
 
+@Singleton
 public class PropertyDAOJdbcImpl implements PropertyDAO {
 
 	private final SimpleDataSource ds;
