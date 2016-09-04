@@ -1,5 +1,6 @@
 package com.vrcc.domain;
 
+import static java.util.Collections.unmodifiableCollection;
 import static java.util.stream.Collectors.toList;
 
 import java.util.Collection;
@@ -50,11 +51,12 @@ public class Property {
 		return new Property(0L, x, y, title, price, description, beds, baths, squareMeters, null);
 	}
 
-	public static Property full(long id, int x, int y, String title, long price, String description, int beds, int baths,
+	public static Property full(long id, int x, int y, String title, long price, String description, int beds,
+			int baths,
 			long squareMeters, Collection<String> provinces) {
 		return new Property(id, x, y, title, price, description, beds, baths, squareMeters, provinces);
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -92,7 +94,17 @@ public class Property {
 	}
 
 	public Collection<String> getProvinces() {
-		return provinces;
+		return unmodifiableCollection(provinces);
+	}
+
+	public Property addProvince(String province) {
+		this.provinces.add(province);
+		return this;
+	}
+
+	public Property addProvinces(Collection<String> province) {
+		this.provinces.addAll(province);
+		return this;
 	}
 
 	@Override

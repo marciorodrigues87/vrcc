@@ -1,14 +1,17 @@
 package com.vrcc.infra.dao.impl;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
+import static java.util.Arrays.asList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -19,9 +22,11 @@ import com.vrcc.infra.db.SimpleDataSource;
 
 public class PropertyDAODataBaseImpl implements PropertyDAO {
 
-	private static final String SQL_INSERT = "INSERT INTO property (x, y, title, price, description, beds, baths, squareMeters) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String SQL_SELECT_ONE = "SELECT id, x, y, title, price, description, beds, baths, squareMeters FROM property WHERE id = ?";
-	private static final String SQL_SELECT_FILTER = "SELECT id, x, y, title, price, description, beds, baths, squareMeters FROM property WHERE x >= ? AND x <= ? AND y >= ? AND y <= ?";
+	private static final String SQL_INSERT_PROPERTY = "INSERT INTO property (x, y, title, price, description, beds, baths, squareMeters) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String SQL_SELECT_ONE = "SELECT p.id, p.x, p.y, p.title, p.price, p.description, p.beds, p.baths, p.squareMeters, pp.name FROM property p JOIN property_province pp ON p.id = pp.property_id WHERE p.id = ?";
+	private static final String SQL_SELECT_FILTER = "SELECT p.id, p.x, p.y, p.title, p.price, p.description, p.beds, p.baths, p.squareMeters, pp.name FROM property p JOIN property_province pp ON p.id = pp.property_id WHERE p.x >= ? AND p.x <= ? AND p.y >= ? AND p.y <= ?";
+	private static final String SQL_INSERT_PROVINCES = "INSERT INTO property_province (property_id, name) VALUES (?, ?)";
+
 	private final SimpleDataSource ds;
 
 	@Inject
@@ -33,7 +38,7 @@ public class PropertyDAODataBaseImpl implements PropertyDAO {
 	public Property add(Property property) {
 		long id = 0;
 		try (Connection c = ds.getConnection()) {
-			try (PreparedStatement stmt = c.prepareStatement(SQL_INSERT, RETURN_GENERATED_KEYS)) {
+			try (PreparedStatement stmt = c.prepareStatement(SQL_INSERT_PROPERTY, RETURN_GENERATED_KEYS)) {
 				int i = 0;
 				stmt.setInt(++i, property.getX());
 				stmt.setInt(++i, property.getY());
@@ -45,11 +50,22 @@ public class PropertyDAODataBaseImpl implements PropertyDAO {
 				stmt.setLong(++i, property.getSquareMeters());
 
 				stmt.executeUpdate();
-				
-				try (ResultSet rs = stmt.getGeneratedKeys()){
+
+				try (ResultSet rs = stmt.getGeneratedKeys()) {
 					if (rs.next()) {
 						id = rs.getLong(1);
 					}
+				}
+
+				try (PreparedStatement provinceStmt = c.prepareStatement(SQL_INSERT_PROVINCES)) {
+					for (String province : property.getProvinces()) {
+						int j = 0;
+						provinceStmt.setLong(++j, id);
+						provinceStmt.setString(++j, province);
+
+						provinceStmt.addBatch();
+					}
+					provinceStmt.executeBatch();
 				}
 			}
 		} catch (SQLException e) {
@@ -65,7 +81,11 @@ public class PropertyDAODataBaseImpl implements PropertyDAO {
 				stmt.setLong(1, id);
 				try (ResultSet rs = stmt.executeQuery()) {
 					if (rs.next()) {
-						return property(rs);
+						final Property property = property(rs);
+						while (rs.next()) {
+							property.addProvince(rs.getString("name"));
+						}
+						return property;
 					}
 				}
 			}
@@ -77,21 +97,25 @@ public class PropertyDAODataBaseImpl implements PropertyDAO {
 
 	private Property property(ResultSet rs) throws SQLException {
 		return Property.full(
-				rs.getLong("id"), 
-				rs.getInt("x"), 
-				rs.getInt("y"), 
-				rs.getString("title"), 
-				rs.getLong("price"), 
-				rs.getString("description"), 
-				rs.getInt("beds"), 
-				rs.getInt("baths"), 
-				rs.getLong("squareMeters"), 
-				null);
+				rs.getLong("id"),
+				rs.getInt("x"),
+				rs.getInt("y"),
+				rs.getString("title"),
+				rs.getLong("price"),
+				rs.getString("description"),
+				rs.getInt("beds"),
+				rs.getInt("baths"),
+				rs.getLong("squareMeters"),
+				provinces(rs));
+	}
+
+	private List<String> provinces(ResultSet rs) throws SQLException {
+		return new ArrayList<>(asList(rs.getString("name")));
 	}
 
 	@Override
 	public Collection<Property> find(PropertyFilter filter) {
-		final Collection<Property> result = new ArrayList<>();
+		final Map<Long, Property> results = new HashMap<>();
 		try (Connection c = ds.getConnection()) {
 			try (PreparedStatement stmt = c.prepareStatement(SQL_SELECT_FILTER)) {
 				int i = 0;
@@ -101,14 +125,20 @@ public class PropertyDAODataBaseImpl implements PropertyDAO {
 				stmt.setInt(++i, filter.getAy());
 				try (ResultSet rs = stmt.executeQuery()) {
 					while (rs.next()) {
-						result.add(property(rs));
+						final Property property = property(rs);
+						final Property result = results.get(property.getId());
+						if (result != null) {
+							result.addProvinces(property.getProvinces());
+							continue;
+						}
+						results.put(property.getId(), property);
 					}
 				}
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		return result;
+		return results.values();
 	}
 
 }
