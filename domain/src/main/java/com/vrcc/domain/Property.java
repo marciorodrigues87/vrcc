@@ -50,6 +50,11 @@ public class Property {
 		return new Property(0L, x, y, title, price, description, beds, baths, squareMeters, null);
 	}
 
+	public static Property full(long id, int x, int y, String title, long price, String description, int beds, int baths,
+			long squareMeters, Collection<String> provinces) {
+		return new Property(id, x, y, title, price, description, beds, baths, squareMeters, provinces);
+	}
+	
 	public long getId() {
 		return id;
 	}

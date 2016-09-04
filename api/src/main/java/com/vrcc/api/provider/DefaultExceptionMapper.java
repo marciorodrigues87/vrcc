@@ -19,7 +19,7 @@ public class DefaultExceptionMapper implements ExceptionMapper<Throwable> {
 
 	@Override
 	public Response toResponse(Throwable exception) {
-		log.error("unexpected excetpion", exception);
+		log.error("unexpected exception", exception);
 		return Response.status(INTERNAL_SERVER_ERROR).entity(ExceptionResponse.from(exception)).type(APPLICATION_JSON)
 				.build();
 	}
