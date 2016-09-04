@@ -1,5 +1,9 @@
 package com.vrcc.infra.dao.impl;
 
+import static com.vrcc.infra.dao.impl.PropertyQueries.SQL_INSERT_PROPERTY;
+import static com.vrcc.infra.dao.impl.PropertyQueries.SQL_INSERT_PROVINCES;
+import static com.vrcc.infra.dao.impl.PropertyQueries.SQL_SELECT_FILTER;
+import static com.vrcc.infra.dao.impl.PropertyQueries.SQL_SELECT_ONE;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 import static java.util.Arrays.asList;
 
@@ -21,11 +25,6 @@ import com.vrcc.infra.dao.PropertyDAO;
 import com.vrcc.infra.db.SimpleDataSource;
 
 public class PropertyDAODataBaseImpl implements PropertyDAO {
-
-	private static final String SQL_INSERT_PROPERTY = "INSERT INTO property (x, y, title, price, description, beds, baths, squareMeters) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String SQL_SELECT_ONE = "SELECT p.id, p.x, p.y, p.title, p.price, p.description, p.beds, p.baths, p.squareMeters, pp.name FROM property p JOIN property_province pp ON p.id = pp.property_id WHERE p.id = ?";
-	private static final String SQL_SELECT_FILTER = "SELECT p.id, p.x, p.y, p.title, p.price, p.description, p.beds, p.baths, p.squareMeters, pp.name FROM property p JOIN property_province pp ON p.id = pp.property_id WHERE p.x >= ? AND p.x <= ? AND p.y >= ? AND p.y <= ?";
-	private static final String SQL_INSERT_PROVINCES = "INSERT INTO property_province (property_id, name) VALUES (?, ?)";
 
 	private final SimpleDataSource ds;
 
