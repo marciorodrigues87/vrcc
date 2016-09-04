@@ -21,3 +21,5 @@ CREATE TABLE `property_province` (
 );
 
 ALTER TABLE `property_province` ADD FOREIGN KEY (property_id) REFERENCES `property` (`id`);
+
+CREATE INDEX ix01_property ON property (x,y);

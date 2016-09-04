@@ -24,12 +24,12 @@ import com.vrcc.domain.PropertyFilter;
 import com.vrcc.infra.dao.PropertyDAO;
 import com.vrcc.infra.db.SimpleDataSource;
 
-public class PropertyDAODataBaseImpl implements PropertyDAO {
+public class PropertyDAOJdbcImpl implements PropertyDAO {
 
 	private final SimpleDataSource ds;
 
 	@Inject
-	public PropertyDAODataBaseImpl(SimpleDataSource ds) {
+	public PropertyDAOJdbcImpl(SimpleDataSource ds) {
 		this.ds = ds;
 	}
 
