@@ -1,0 +1,20 @@
+version: "2"
+
+services:
+  vrcc:
+    build: ./vrcc
+    ports: 
+      - "8080:8080"
+    links:
+      - db:db
+  db:
+   image: mysql:latest
+   ports:
+      - "3306:3306"
+   volumes:
+     - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+   environment:
+      MYSQL_ROOT_PASSWORD: vrcc
+      MYSQL_DATABASE: vrcc
+      MYSQL_USER: vrcc
+      MYSQL_PASSWORD: vrcc
