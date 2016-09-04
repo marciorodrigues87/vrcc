@@ -19,19 +19,19 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.sql.DataSource;
 
 import com.vrcc.domain.Property;
 import com.vrcc.domain.PropertyFilter;
 import com.vrcc.infra.dao.PropertyDAO;
-import com.vrcc.infra.db.SimpleDataSource;
 
 @Singleton
 public class PropertyDAOJdbcImpl implements PropertyDAO {
 
-	private final SimpleDataSource ds;
+	private final DataSource ds;
 
 	@Inject
-	public PropertyDAOJdbcImpl(SimpleDataSource ds) {
+	public PropertyDAOJdbcImpl(DataSource ds) {
 		this.ds = ds;
 	}
 
