@@ -24,6 +24,14 @@
 			<groupId>biz.paluch.redis</groupId>
 			<artifactId>lettuce</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-java8</artifactId>
+		</dependency>
 	</dependencies>
 
 </project>

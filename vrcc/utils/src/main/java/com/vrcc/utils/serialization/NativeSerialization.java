@@ -1,4 +1,4 @@
-package com.vrcc.utils;
+package com.vrcc.utils.serialization;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -7,8 +7,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class Serialization {
+import javax.inject.Singleton;
 
+@Singleton
+public class NativeSerialization implements SerializationProvider {
+
+	@Override
 	public byte[] serialize(Serializable o) {
 		if (o == null) {
 			throw new IllegalArgumentException();
@@ -22,6 +26,7 @@ public class Serialization {
 		}
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T deserialize(byte[] in) {
 		if (in == null) {

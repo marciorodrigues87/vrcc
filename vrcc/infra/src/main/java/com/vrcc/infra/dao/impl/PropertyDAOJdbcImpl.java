@@ -74,7 +74,7 @@ public class PropertyDAOJdbcImpl implements PropertyDAO {
 				}
 				commit(c);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			rollback(c);
 			throw new RuntimeException(e);
 		} finally {
@@ -113,7 +113,7 @@ public class PropertyDAOJdbcImpl implements PropertyDAO {
 	}
 
 	@Override
-	@Cached(ttl = 1000)
+	@Cached(ttl = 60)
 	public Property get(long id) {
 		try (Connection c = ds.getConnection()) {
 			try (PreparedStatement stmt = c.prepareStatement(SQL_SELECT_ONE)) {
@@ -153,7 +153,7 @@ public class PropertyDAOJdbcImpl implements PropertyDAO {
 	}
 
 	@Override
-	@Cached(ttl = 1000)
+	@Cached(ttl = 60)
 	public Collection<Property> find(PropertyFilter filter) {
 		final Map<Long, Property> results = new HashMap<>();
 		try (Connection c = ds.getConnection()) {

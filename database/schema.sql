@@ -9,7 +9,7 @@ CREATE TABLE `property` (
   `description` VARCHAR(2048) NOT NULL,
   `beds` INTEGER NOT NULL,
   `baths` INTEGER NOT NULL,
-  `squareMeters` INTEGER NOT NULL,
+  `square_meters` INTEGER NOT NULL,
   PRIMARY KEY (`id`)
 );
 
