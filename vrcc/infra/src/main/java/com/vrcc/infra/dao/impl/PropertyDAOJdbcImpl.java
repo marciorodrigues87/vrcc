@@ -39,7 +39,10 @@ public class PropertyDAOJdbcImpl implements PropertyDAO {
 	@Override
 	public Property add(Property property) {
 		long id = 0;
-		try (Connection c = ds.getConnection()) {
+		Connection c = null;
+		try {
+			c = ds.getConnection();
+			startTx(c);
 			try (PreparedStatement stmt = c.prepareStatement(SQL_INSERT_PROPERTY, RETURN_GENERATED_KEYS)) {
 				int i = 0;
 				stmt.setInt(++i, property.getX());
@@ -69,11 +72,44 @@ public class PropertyDAOJdbcImpl implements PropertyDAO {
 					}
 					provinceStmt.executeBatch();
 				}
+				commit(c);
+			}
+		} catch (SQLException e) {
+			rollback(c);
+			throw new RuntimeException(e);
+		} finally {
+			close(c);
+		}
+		return Property.added(id, property);
+	}
+
+	private void startTx(Connection c) throws SQLException {
+		c.setAutoCommit(false);
+	}
+
+	private void commit(Connection c) throws SQLException {
+		c.commit();
+	}
+
+	private void close(Connection c) {
+		try {
+			if (c != null && !c.isClosed()) {
+				c.setAutoCommit(true);
+				c.close();
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		return Property.added(id, property);
+	}
+
+	private void rollback(Connection c) {
+		if (c != null) {
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				throw new RuntimeException(e1);
+			}
+		}
 	}
 
 	@Override
