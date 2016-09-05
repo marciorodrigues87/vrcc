@@ -1,6 +1,10 @@
 package com.vrcc.domain;
 
-public class PropertyFilter {
+import java.io.Serializable;
+
+public class PropertyFilter implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private final int ax;
 	private final int ay;
@@ -63,6 +67,21 @@ public class PropertyFilter {
 		if (by != other.by)
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("PropertyFilter [ax=");
+		builder.append(ax);
+		builder.append(", ay=");
+		builder.append(ay);
+		builder.append(", bx=");
+		builder.append(bx);
+		builder.append(", by=");
+		builder.append(by);
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

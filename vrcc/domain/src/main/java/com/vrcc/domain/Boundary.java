@@ -1,6 +1,10 @@
 package com.vrcc.domain;
 
-public class Boundary {
+import java.io.Serializable;
+
+public class Boundary implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private final int x;
 	private final int y;

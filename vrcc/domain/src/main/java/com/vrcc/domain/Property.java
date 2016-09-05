@@ -3,9 +3,12 @@ package com.vrcc.domain;
 import static java.util.Collections.unmodifiableCollection;
 import static java.util.stream.Collectors.toList;
 
+import java.io.Serializable;
 import java.util.Collection;
 
-public class Property {
+public class Property implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private final long id;
 	private final int x;

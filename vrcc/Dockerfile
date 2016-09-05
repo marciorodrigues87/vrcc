@@ -1,4 +1,4 @@
-FROM jetty
+FROM jetty:alpine
 
 MAINTAINER Marcio Rodrigues <marciorodrigues87@gmail.com>
 

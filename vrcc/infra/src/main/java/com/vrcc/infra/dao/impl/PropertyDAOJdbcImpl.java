@@ -24,6 +24,7 @@ import javax.sql.DataSource;
 import com.vrcc.domain.Property;
 import com.vrcc.domain.PropertyFilter;
 import com.vrcc.infra.dao.PropertyDAO;
+import com.vrcc.utils.cache.Cached;
 
 @Singleton
 public class PropertyDAOJdbcImpl implements PropertyDAO {
@@ -76,6 +77,7 @@ public class PropertyDAOJdbcImpl implements PropertyDAO {
 	}
 
 	@Override
+	@Cached(ttl = 1000)
 	public Property get(long id) {
 		try (Connection c = ds.getConnection()) {
 			try (PreparedStatement stmt = c.prepareStatement(SQL_SELECT_ONE)) {
@@ -115,6 +117,7 @@ public class PropertyDAOJdbcImpl implements PropertyDAO {
 	}
 
 	@Override
+	@Cached(ttl = 1000)
 	public Collection<Property> find(PropertyFilter filter) {
 		final Map<Long, Property> results = new HashMap<>();
 		try (Connection c = ds.getConnection()) {
@@ -139,7 +142,7 @@ public class PropertyDAOJdbcImpl implements PropertyDAO {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		return results.values();
+		return new ArrayList<>(results.values());
 	}
 
 }

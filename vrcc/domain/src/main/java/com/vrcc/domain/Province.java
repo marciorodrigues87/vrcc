@@ -1,6 +1,10 @@
 package com.vrcc.domain;
 
-public class Province {
+import java.io.Serializable;
+
+public class Province implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private final String name;
 	private final Boundaries boundaries;
