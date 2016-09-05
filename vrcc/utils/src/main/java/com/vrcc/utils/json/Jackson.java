@@ -5,9 +5,12 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Singleton;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Singleton
 public class Jackson implements JsonProvider {
 
 	private final ObjectMapper mapper = new ObjectMapper();

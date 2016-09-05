@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,6 +21,7 @@ import com.vrcc.infra.dao.PropertyDAO;
 import com.vrcc.infra.dao.impl.entity.PropertyEntity;
 import com.vrcc.utils.cache.Cached;
 
+@Singleton
 public class PropertyDAOHibernateImpl implements PropertyDAO {
 
 	private final SessionFactory sf;

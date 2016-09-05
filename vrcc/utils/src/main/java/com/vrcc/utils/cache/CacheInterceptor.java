@@ -25,7 +25,7 @@ public class CacheInterceptor implements MethodInterceptor {
 			return cached;
 		}
 		final Object object = invocation.proceed();
-		if (!(object instanceof Serializable)) {
+		if (object != null && !(object instanceof Serializable)) {
 			throw new RuntimeException(format("return class %s is not Serializable", object.getClass()));
 		}
 		final Serializable serializable = (Serializable) object;
