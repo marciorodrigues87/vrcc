@@ -2,31 +2,27 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.vrcc</groupId>
-		<artifactId>vrcc</artifactId>
+		<artifactId>app</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>infra</artifactId>
+	<artifactId>utils</artifactId>
 
 	<dependencies>
 		<dependency>
-			<groupId>com.vrcc</groupId>
-			<artifactId>domain</artifactId>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.vrcc</groupId>
-			<artifactId>utils</artifactId>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.google.inject</groupId>
 			<artifactId>guice</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.zaxxer</groupId>
-			<artifactId>HikariCP</artifactId>
+			<groupId>biz.paluch.redis</groupId>
+			<artifactId>lettuce</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
