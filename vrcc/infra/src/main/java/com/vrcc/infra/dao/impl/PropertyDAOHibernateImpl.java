@@ -1,5 +1,7 @@
 package com.vrcc.infra.dao.impl;
 
+import static com.vrcc.infra.dao.impl.PropertyHQLQueries.HQL_SELECT_FILTER;
+import static com.vrcc.infra.dao.impl.PropertyHQLQueries.HQL_SELECT_ONE;
 import static java.util.stream.Collectors.toSet;
 
 import java.util.Collection;
@@ -55,7 +57,7 @@ public class PropertyDAOHibernateImpl implements PropertyDAO {
 		try (final StatelessSession session = stateless()) {
 			@SuppressWarnings("unchecked")
 			final List<PropertyEntity> list = session
-					.createQuery("FROM PropertyEntity p INNER JOIN FETCH p.provinces WHERE p.id = :id")
+					.createQuery(HQL_SELECT_ONE)
 					.setLong("id", id)
 					.list();
 			property = (PropertyEntity) (list.isEmpty() ? null : list.iterator().next());
@@ -76,8 +78,7 @@ public class PropertyDAOHibernateImpl implements PropertyDAO {
 	public Collection<Property> find(PropertyFilter filter) {
 		final List<PropertyEntity> list;
 		try (final StatelessSession session = stateless()) {
-			list = session.createQuery(
-					"FROM PropertyEntity p INNER JOIN FETCH p.provinces WHERE p.x >= :ax AND p.x <= :bx AND p.y >= :by AND p.y <= :ay")
+			list = session.createQuery(HQL_SELECT_FILTER)
 					.setInteger("ax", filter.getAx())
 					.setInteger("bx", filter.getBx())
 					.setInteger("by", filter.getBy())
