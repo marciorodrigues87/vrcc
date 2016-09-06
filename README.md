@@ -30,4 +30,12 @@ To get the added property:
 	
 To search for properties in an area:
 
-	curl http://$(docker-machine ip default):8080/properties\?ax\=0\&ay\=500\&bx\=600\&by\=0 
+	curl http://$(docker-machine ip default):8080/properties\?ax\=0\&ay\=500\&bx\=600\&by\=0
+
+## automated tests
+
+After building and running, just run the following command:
+
+	cd app/integration-tests && mvn test -P integration-tests
+
+on project root dir.
