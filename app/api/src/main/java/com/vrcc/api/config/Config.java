@@ -1,11 +1,12 @@
 package com.vrcc.api.config;
 
 import static java.lang.System.getProperty;
+import static java.lang.System.getenv;
 
 public enum Config {
 
-	CACHE_HOST("cache.host", "cache"), 
-	DB_HOST("cache.host", "db");
+	CACHE_HOST("vrcc.cache.host", "cache"), 
+	DB_HOST("vrcc.db.host", "db");
 
 	private final String key;
 	private final String defaultValue;
@@ -16,6 +17,10 @@ public enum Config {
 	}
 
 	public String asString() {
+		final String env = getenv(key);
+		if (env != null) {
+			return env;
+		}
 		return getProperty(key, defaultValue);
 	}
 
