@@ -11,7 +11,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -104,8 +103,7 @@ public class PropertyEntity {
 		return squareMeters;
 	}
 
-	@OneToMany(fetch = LAZY, cascade = ALL)
-	@JoinColumn(name = "property_id", referencedColumnName = "id", nullable = false, insertable = true, updatable = false)
+	@OneToMany(fetch = LAZY, cascade = ALL, mappedBy = "property")
 	public Collection<PropertyProvinceEntity> getProvinces() {
 		return provinces;
 	}

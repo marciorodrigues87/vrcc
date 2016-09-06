@@ -22,6 +22,9 @@ import com.vrcc.utils.cache.CacheKeyGenerator;
 import com.vrcc.utils.cache.Cached;
 import com.vrcc.utils.cache.impl.MethodSignatureGenerator;
 import com.vrcc.utils.cache.impl.Redis;
+import com.vrcc.utils.hibernate.HibernateTransactionInterceptor;
+import com.vrcc.utils.hibernate.SessionContext;
+import com.vrcc.utils.hibernate.Transactional;
 import com.vrcc.utils.json.Jackson;
 import com.vrcc.utils.json.JsonProvider;
 import com.vrcc.utils.serialization.NativeSerialization;
@@ -46,6 +49,10 @@ public class InfraModule extends AbstractModule {
 		final HikariDataSource dataSource = dataSource();
 		bind(DataSource.class).toInstance(dataSource);
 		bind(SessionFactory.class).toInstance(sessionFactory(dataSource));
+		bind(SessionContext.class);
+		final HibernateTransactionInterceptor transactionInterceptor = new HibernateTransactionInterceptor();
+		requestInjection(transactionInterceptor);
+		bindInterceptor(any(), annotatedWith(Transactional.class), transactionInterceptor);
 	}
 
 	private SessionFactory sessionFactory(final HikariDataSource dataSource) {
