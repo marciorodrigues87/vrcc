@@ -5,11 +5,12 @@
 		<artifactId>app</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>domain</artifactId>
+	<artifactId>integration-tests</artifactId>
+
 	<dependencies>
 		<dependency>
-			<groupId>com.vrcc</groupId>
-			<artifactId>integration-tests</artifactId>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
 		</dependency>
 	</dependencies>
 </project>

@@ -10,6 +10,7 @@
 		<module>utils</module>
 		<module>core</module>
 		<module>infra</module>
+		<module>integration-tests</module>
 	</modules>
 
 	<properties>
@@ -33,6 +34,24 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.11</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.surefire</groupId>
+						<artifactId>surefire-junit47</artifactId>
+						<version>2.12</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<includes>
+						<include>**/*.class</include>
+					</includes>
+					<excludedGroups>com.vrcc.tests.IntegrationTest</excludedGroups>
+				</configuration>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -44,6 +63,24 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>integration-tests</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<excludedGroups>java.io.Serializable</excludedGroups>
+							<groups>com.vrcc.tests.IntegrationTest</groups>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<dependencyManagement>
 		<dependencies>
@@ -71,6 +108,12 @@
 				<groupId>com.vrcc</groupId>
 				<artifactId>infra</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.vrcc</groupId>
+				<artifactId>integration-tests</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>javax.validation</groupId>
@@ -166,6 +209,12 @@
 				<artifactId>javax.servlet-api</artifactId>
 				<version>3.0.1</version>
 				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>io.rest-assured</groupId>
+				<artifactId>rest-assured</artifactId>
+				<version>3.0.1</version>
+				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>

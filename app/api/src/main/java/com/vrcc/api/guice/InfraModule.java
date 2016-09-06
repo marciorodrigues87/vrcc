@@ -26,6 +26,8 @@ import com.vrcc.utils.cache.Cache;
 import com.vrcc.utils.cache.CacheInterceptor;
 import com.vrcc.utils.cache.CacheKeyGenerator;
 import com.vrcc.utils.cache.Cached;
+import com.vrcc.utils.cache.Expires;
+import com.vrcc.utils.cache.ExpiringCacheInterceptor;
 import com.vrcc.utils.cache.impl.MethodSignatureGenerator;
 import com.vrcc.utils.cache.impl.Redis;
 import com.vrcc.utils.hibernate.HibernateTransactionInterceptor;
@@ -47,6 +49,9 @@ public class InfraModule extends AbstractModule {
 		final CacheInterceptor cacheInterceptor = new CacheInterceptor();
 		requestInjection(cacheInterceptor);
 		bindInterceptor(any(), annotatedWith(Cached.class), cacheInterceptor);
+		final ExpiringCacheInterceptor expiringCacheInterceptor = new ExpiringCacheInterceptor();
+		requestInjection(expiringCacheInterceptor);
+		bindInterceptor(any(), annotatedWith(Expires.class), expiringCacheInterceptor);
 		bind(JsonProvider.class).to(Jackson.class);
 		bind(ObjectMapper.class);
 		bind(SerializationProvider.class).to(NativeSerialization.class);

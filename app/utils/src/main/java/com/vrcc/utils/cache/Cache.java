@@ -8,4 +8,5 @@ public interface Cache {
 
 	<T extends Serializable> T get(String key);
 
+	void remove(String pattern);
 }

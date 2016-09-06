@@ -15,6 +15,7 @@ import com.vrcc.domain.PropertyFilter;
 import com.vrcc.infra.dao.PropertyDAO;
 import com.vrcc.infra.dao.impl.entity.PropertyEntity;
 import com.vrcc.utils.cache.Cached;
+import com.vrcc.utils.cache.Expires;
 import com.vrcc.utils.hibernate.SessionContext;
 import com.vrcc.utils.hibernate.Transactional;
 
@@ -30,6 +31,7 @@ public class PropertyDAOHibernateImpl implements PropertyDAO {
 
 	@Override
 	@Transactional
+	@Expires(methodName = "find")
 	public Property add(Property property) {
 		final PropertyEntity propertyEntity = propertyEntity(property);
 		session.get().persist(propertyEntity);

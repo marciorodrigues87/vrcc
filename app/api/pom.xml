@@ -53,6 +53,10 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.vrcc</groupId>
+			<artifactId>integration-tests</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

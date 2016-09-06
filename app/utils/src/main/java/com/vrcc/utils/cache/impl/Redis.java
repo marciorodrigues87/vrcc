@@ -43,4 +43,12 @@ public class Redis implements Cache {
 		}
 	}
 
+	@Override
+	public void remove(String pattern) {
+		try {
+			async.keys(pattern.getBytes()).get().forEach(bs -> async.del(bs));
+		} catch (Exception e) {
+		}
+	}
+
 }

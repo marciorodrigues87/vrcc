@@ -1,15 +1,15 @@
 package com.vrcc.api.provider;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.TreeSet;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 public class ValidationResponse {
 
-	private final Collection<Violation> constraintViolations = new ArrayList<>();
+	private final Collection<Violation> constraintViolations = new TreeSet<>();
 
 	private ValidationResponse() {
 	}
@@ -31,7 +31,7 @@ public class ValidationResponse {
 		return Collections.unmodifiableCollection(constraintViolations);
 	}
 
-	static class Violation {
+	static class Violation implements Comparable<Violation> {
 
 		private final String name;
 		private final String message;
@@ -47,6 +47,11 @@ public class ValidationResponse {
 
 		public String getMessage() {
 			return message;
+		}
+
+		@Override
+		public int compareTo(Violation o) {
+			return name.compareTo(o.name);
 		}
 
 	}

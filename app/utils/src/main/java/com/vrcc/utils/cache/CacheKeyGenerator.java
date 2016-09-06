@@ -6,4 +6,6 @@ public interface CacheKeyGenerator {
 
 	String keyFor(Method method, Object[] args);
 
+	String keyPattern(Method method);
+
 }

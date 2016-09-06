@@ -42,4 +42,14 @@ public class MethodSignatureGenerator implements CacheKeyGenerator {
 		}
 	}
 
+	@Override
+	public String keyPattern(Method method) {
+		final StringBuilder sb = new StringBuilder();
+		appendClassAndMethod(method, sb);
+		appendParameterTypes(method, sb);
+		sb.append("*");
+		final String key = sb.toString();
+		return key;
+	}
+
 }
