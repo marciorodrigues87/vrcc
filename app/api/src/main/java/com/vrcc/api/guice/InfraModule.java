@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.lambdaworks.redis.RedisClient;
 import com.vrcc.infra.dao.PropertyDAO;
@@ -42,6 +43,7 @@ public class InfraModule extends AbstractModule {
 		requestInjection(cacheInterceptor);
 		bindInterceptor(any(), annotatedWith(Cached.class), cacheInterceptor);
 		bind(JsonProvider.class).to(Jackson.class);
+		bind(ObjectMapper.class);
 		bind(SerializationProvider.class).to(NativeSerialization.class);
 		bind(CacheKeyGenerator.class).to(MethodSignatureGenerator.class);
 		bind(RedisClient.class).toInstance(redisClient());

@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vrcc.domain.Boundary;
 import com.vrcc.domain.Province;
 import com.vrcc.utils.json.Jackson;
@@ -28,7 +29,7 @@ public class ProvinceDAOFileImplTest {
 
 	@Before
 	public void before() {
-		dao = new ProvinceDAOFileImpl(new Jackson());
+		dao = new ProvinceDAOFileImpl(new Jackson(new ObjectMapper()));
 	}
 
 	@Test

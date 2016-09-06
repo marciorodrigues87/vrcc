@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,7 +14,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Singleton
 public class Jackson implements JsonProvider {
 
-	private final ObjectMapper mapper = new ObjectMapper();
+	private final ObjectMapper mapper;
+
+	@Inject
+	public Jackson(ObjectMapper mapper) {
+		this.mapper = mapper;
+	}
 
 	@Override
 	public String to(Object object) {
