@@ -16,6 +16,10 @@ public enum Config {
 		this.defaultValue = defaultValue;
 	}
 
+	public String key() {
+		return key;
+	}
+	
 	public String asString() {
 		final String env = getenv(key);
 		if (env != null) {

@@ -31,24 +31,6 @@ public class Jackson implements JsonProvider {
 	}
 
 	@Override
-	public <T> T from(String json, Class<T> clazz) {
-		try {
-			return mapper.readValue(json, clazz);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Override
-	public <T> T from(InputStream json, Class<T> clazz) {
-		try {
-			return mapper.readValue(json, clazz);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Override
 	public <K, V> Map<K, V> from(InputStream json, Class<K> key, Class<V> value) {
 		try {
 			return mapper.readValue(json, mapper.getTypeFactory().constructMapLikeType(HashMap.class, key, value));

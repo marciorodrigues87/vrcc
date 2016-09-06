@@ -16,6 +16,7 @@ import com.vrcc.utils.math.Point;
 import com.vrcc.utils.math.Rectangle;
 
 @Singleton
+@Deprecated
 public class PropertyDAOMemoryImpl implements PropertyDAO {
 
 	private final AtomicLong sequence = new AtomicLong(0);

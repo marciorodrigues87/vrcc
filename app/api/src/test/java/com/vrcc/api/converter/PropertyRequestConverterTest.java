@@ -4,9 +4,9 @@ import static java.lang.Integer.parseInt;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -25,15 +25,11 @@ public class PropertyRequestConverterTest {
 	private static final String X = "1";
 	private static final String Y = "5";
 
+	@InjectMocks
 	private PropertyRequestConverter converter;
 
 	@Mock
 	private PropertyRequest request;
-
-	@Before
-	public void before() {
-		converter = new PropertyRequestConverter();
-	}
 
 	@Test
 	public void shouldConvertProperty() {

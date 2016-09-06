@@ -27,6 +27,7 @@ import com.vrcc.infra.dao.PropertyDAO;
 import com.vrcc.utils.cache.Cached;
 
 @Singleton
+@Deprecated
 public class PropertyDAOJdbcImpl implements PropertyDAO {
 
 	private final DataSource ds;

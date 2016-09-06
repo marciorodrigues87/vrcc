@@ -1,5 +1,6 @@
 package com.vrcc.infra.dao.impl;
 
+@Deprecated
 public final class PropertyQueries {
 
 	static final String SQL_INSERT_PROPERTY = "INSERT INTO property (x, y, title, price, description, beds, baths, square_meters) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";

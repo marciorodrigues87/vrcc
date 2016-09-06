@@ -26,7 +26,10 @@ public class Redis implements Cache {
 
 	@Override
 	public void put(String key, Serializable value, long seconds) {
-		async.setex(key.getBytes(), seconds, serialization.serialize(value));
+		try {
+			async.setex(key.getBytes(), seconds, serialization.serialize(value));
+		} catch (Exception e) {
+		}
 	}
 
 	@Override

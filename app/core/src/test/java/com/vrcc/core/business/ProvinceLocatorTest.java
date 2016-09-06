@@ -3,9 +3,9 @@ package com.vrcc.core.business;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -19,6 +19,7 @@ public class ProvinceLocatorTest {
 	private static final int Y = 6;
 	private static final int X = 1;
 
+	@InjectMocks
 	private ProvinceLocator provinceLocator;
 
 	@Mock
@@ -26,11 +27,6 @@ public class ProvinceLocatorTest {
 
 	@Mock
 	private Property property;
-
-	@Before
-	public void before() {
-		provinceLocator = new ProvinceLocator(provinceDAO);
-	}
 
 	@Test
 	public void shouldLocateProperty() {

@@ -6,20 +6,22 @@ import static org.mockito.Mockito.when;
 
 import java.util.Collection;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.vrcc.domain.Property;
 import com.vrcc.domain.PropertyFilter;
 
+@SuppressWarnings("deprecation")
 @RunWith(MockitoJUnitRunner.class)
 public class PropertyDAOMemoryImplTest {
 
 	private static final int ID = 1;
 
+	@InjectMocks
 	private PropertyDAOMemoryImpl dao;
 
 	@Mock
@@ -27,11 +29,6 @@ public class PropertyDAOMemoryImplTest {
 
 	@Mock
 	private PropertyFilter filter;
-
-	@Before
-	public void before() {
-		dao = new PropertyDAOMemoryImpl();
-	}
 
 	@Test
 	public void shouldAddProperty() {

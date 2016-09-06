@@ -4,9 +4,9 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -18,6 +18,7 @@ public class PropertyAssemblerTest {
 
 	private static final String PROVINCE_NAME = "Z";
 
+	@InjectMocks
 	private PropertyAssembler propertyAssembler;
 
 	@Mock
@@ -25,11 +26,6 @@ public class PropertyAssemblerTest {
 
 	@Mock
 	private Province province;
-
-	@Before
-	public void before() {
-		propertyAssembler = new PropertyAssembler();
-	}
 
 	@Test
 	public void shouldAssemblyProperty() {

@@ -7,9 +7,9 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -24,6 +24,7 @@ public class SimplePropertyFacadeTest {
 
 	private static final int ID = 123;
 
+	@InjectMocks
 	private SimplePropertyFacade facade;
 
 	@Mock
@@ -40,11 +41,6 @@ public class SimplePropertyFacadeTest {
 
 	@Mock
 	private Province province;
-
-	@Before
-	public void before() {
-		facade = new SimplePropertyFacade(propertyDAO, provinceLocator, propertyAssembler);
-	}
 
 	@Test
 	public void shouldAddProperty() {
