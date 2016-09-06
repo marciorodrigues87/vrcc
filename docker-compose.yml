@@ -23,3 +23,12 @@ services:
    image: redis:alpine
    ports:
       - "6379:6379"
+  log:
+   image: pblittle/docker-logstash
+   ports:
+      - "9292:9292"
+      - "9200:9200"
+      - "9998:9998"
+      - "9999:9999/udp"
+   volumes:
+      - ./log/logstash-embedded.conf:/opt/logstash.conf
