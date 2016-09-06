@@ -2,7 +2,12 @@ package com.vrcc.api.guice;
 
 import static com.google.inject.matcher.Matchers.annotatedWith;
 import static com.google.inject.matcher.Matchers.any;
+import static com.vrcc.api.config.Config.CACHE_HOST;
+import static com.vrcc.api.config.Config.DB_HOST;
 import static com.vrcc.utils.hibernate.HibernateSessionFactoryBuilder.sessionFactoryBuilder;
+import static java.lang.String.format;
+
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -48,7 +53,7 @@ public class InfraModule extends AbstractModule {
 		bind(CacheKeyGenerator.class).to(MethodSignatureGenerator.class);
 		bind(RedisClient.class).toInstance(redisClient());
 		bind(Cache.class).to(Redis.class);
-		final HikariDataSource dataSource = dataSource();
+		final DataSource dataSource = dataSource();
 		bind(DataSource.class).toInstance(dataSource);
 		bind(SessionFactory.class).toInstance(sessionFactory(dataSource));
 		bind(SessionContext.class);
@@ -57,7 +62,7 @@ public class InfraModule extends AbstractModule {
 		bindInterceptor(any(), annotatedWith(Transactional.class), transactionInterceptor);
 	}
 
-	private SessionFactory sessionFactory(final HikariDataSource dataSource) {
+	private SessionFactory sessionFactory(DataSource dataSource) {
 		return sessionFactoryBuilder()
 				.addAnnotatedClass(PropertyEntity.class)
 				.addAnnotatedClass(PropertyProvinceEntity.class)
@@ -66,11 +71,18 @@ public class InfraModule extends AbstractModule {
 	}
 
 	private RedisClient redisClient() {
-		return RedisClient.create("redis://cache");
+		return RedisClient.create(format("redis://%s", CACHE_HOST.asString()));
 	}
 
-	private HikariDataSource dataSource() {
-		return new HikariDataSource(new HikariConfig("/hikari.properties"));
+	private DataSource dataSource() {
+		final Properties properties = new Properties();
+		properties.put("dataSourceClassName", "com.mysql.cj.jdbc.MysqlDataSource");
+		properties.put("dataSource.databaseName", "vrcc");
+		properties.put("dataSource.user", "vrcc");
+		properties.put("dataSource.password", "vrcc");
+		properties.put("dataSource.portNumber", "3306");
+		properties.put("dataSource.serverName", DB_HOST.asString());
+		return new HikariDataSource(new HikariConfig(properties));
 	}
 
 }
