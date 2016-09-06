@@ -4,6 +4,8 @@
 
 You will need the following dependencies:
 
+	java8
+	maven3
 	docker
 	a docker-machine named default
 	docker env configured (docker-machine start default && eval $(docker-machine env default))
