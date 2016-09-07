@@ -19,6 +19,8 @@ Just run the command:
 
 on project root dir.
 
+NOTE: If the application receives error when connecting to the database, wait until the database container is created and then run the command again :(
+
 ## local testing
 
 To add a new property:
