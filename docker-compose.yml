@@ -8,6 +8,7 @@ services:
     links:
       - db:db
       - cache:cache
+      - log:log
   db:
    image: mysql:latest
    ports:
@@ -31,4 +32,4 @@ services:
       - "9998:9998"
       - "9999:9999/udp"
    volumes:
-      - ./log/logstash-embedded.conf:/opt/logstash.conf
+      - ./log/logstash-embedded.conf:/opt/logstash/conf.d/logstash-embedded.conf
