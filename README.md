@@ -37,7 +37,7 @@ To search for properties in an area:
 
 After building and running, just run the following command:
 
-	cd app/integration-tests && mvn test -P integration-tests
+	cd app/integration-tests && mvn test -P integration-tests -Dvrcc.tests.integration.host=http://$(docker-machine ip default)
 
 on project root dir.
 
