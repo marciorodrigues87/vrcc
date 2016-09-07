@@ -40,3 +40,13 @@ After building and running, just run the following command:
 	cd app/integration-tests && mvn test -P integration-tests
 
 on project root dir.
+
+## logs
+
+To see the application logs access this link:
+
+	http://$(docker-machine ip default):9292/index.html#/dashboard/file/logstash.json
+
+Or run (for Mac user):
+
+	open -a Safari http://$(docker-machine ip default):9292/index.html#/dashboard/file/logstash.json
